@@ -5,8 +5,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Sprout, Upload, Coins, FileText, QrCode, CheckCircle } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Sprout, Upload, Coins, FileText, QrCode, CheckCircle, Activity, Brain, Users } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { DigitalTwin } from "./DigitalTwin";
+import { AIDecisionLayer } from "./AIDecisionLayer";
 
 interface Batch {
   id: string;
@@ -78,6 +81,28 @@ export const FarmerInterface = () => {
         <h2 className="text-2xl font-bold">Farmer Dashboard</h2>
         <span className="text-sm text-muted-foreground">କୃଷକ ଡ୍ୟାସବୋର୍ଡ</span>
       </div>
+
+      <Tabs defaultValue="overview" className="w-full">
+        <TabsList className="grid w-full grid-cols-4">
+          <TabsTrigger value="overview">
+            <Sprout className="h-4 w-4 mr-2" />
+            Overview
+          </TabsTrigger>
+          <TabsTrigger value="digital-twin">
+            <Activity className="h-4 w-4 mr-2" />
+            Digital Twin
+          </TabsTrigger>
+          <TabsTrigger value="ai-decisions">
+            <Brain className="h-4 w-4 mr-2" />
+            AI Decisions
+          </TabsTrigger>
+          <TabsTrigger value="community">
+            <Users className="h-4 w-4 mr-2" />
+            Community
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="overview" className="space-y-6">
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -207,6 +232,70 @@ export const FarmerInterface = () => {
           </div>
         </CardContent>
       </Card>
+        </TabsContent>
+
+        <TabsContent value="digital-twin">
+          <DigitalTwin batchId="BATCH001" />
+        </TabsContent>
+
+        <TabsContent value="ai-decisions">
+          <AIDecisionLayer batchId="BATCH001" />
+        </TabsContent>
+
+        <TabsContent value="community">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Users className="h-5 w-5" />
+                Community Features
+              </CardTitle>
+              <CardDescription>
+                Connect with other farmers and agricultural experts
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Card>
+                  <CardContent className="p-4">
+                    <h4 className="font-semibold mb-2">Share Knowledge</h4>
+                    <p className="text-sm text-muted-foreground mb-3">
+                      Post your farming tips and success stories
+                    </p>
+                    <Button variant="outline" size="sm">Share Your Experience</Button>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardContent className="p-4">
+                    <h4 className="font-semibold mb-2">Get Expert Help</h4>
+                    <p className="text-sm text-muted-foreground mb-3">
+                      Consult with agricultural experts for personalized advice
+                    </p>
+                    <Button variant="outline" size="sm">Ask an Expert</Button>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardContent className="p-4">
+                    <h4 className="font-semibold mb-2">Market Insights</h4>
+                    <p className="text-sm text-muted-foreground mb-3">
+                      Get real-time market prices and demand forecasts
+                    </p>
+                    <Button variant="outline" size="sm">View Market Data</Button>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardContent className="p-4">
+                    <h4 className="font-semibold mb-2">Weather Alerts</h4>
+                    <p className="text-sm text-muted-foreground mb-3">
+                      Receive AI-powered weather predictions and farming recommendations
+                    </p>
+                    <Button variant="outline" size="sm">Get Weather Alerts</Button>
+                  </CardContent>
+                </Card>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { RoleSelector } from "./RoleSelector";
 import { FarmerInterface } from "./FarmerInterface";
 import { ConsumerInterface } from "./ConsumerInterface";
 import { BlockchainSimulator } from "./BlockchainSimulator";
+import { CommunityPage } from "./CommunityPage";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -26,15 +27,18 @@ const stats: StatsData = {
 export const Dashboard = () => {
   const [selectedRole, setSelectedRole] = useState<string>("");
   const [showBlockchain, setShowBlockchain] = useState(false);
+  const [showCommunity, setShowCommunity] = useState(false);
 
   const handleRoleSelect = (roleId: string) => {
     setSelectedRole(roleId);
     setShowBlockchain(false);
+    setShowCommunity(false);
   };
 
   const handleBackToDashboard = () => {
     setSelectedRole("");
     setShowBlockchain(false);
+    setShowCommunity(false);
   };
 
   const renderRoleInterface = () => {
@@ -51,6 +55,22 @@ export const Dashboard = () => {
         return null;
     }
   };
+
+  if (showCommunity) {
+    return (
+      <div className="min-h-screen bg-gradient-subtle">
+        <div className="container mx-auto px-4 py-8">
+          <div className="flex items-center gap-4 mb-6">
+            <Button variant="outline" onClick={handleBackToDashboard}>
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back to Dashboard
+            </Button>
+          </div>
+          <CommunityPage />
+        </div>
+      </div>
+    );
+  }
 
   if (showBlockchain) {
     return (
@@ -80,6 +100,10 @@ export const Dashboard = () => {
             <Button variant="blockchain" onClick={() => setShowBlockchain(true)}>
               <BarChart3 className="h-4 w-4 mr-2" />
               View Blockchain Explorer
+            </Button>
+            <Button variant="success" onClick={() => setShowCommunity(true)}>
+              <Users className="h-4 w-4 mr-2" />
+              Community Hub
             </Button>
           </div>
           {renderRoleInterface()}
@@ -256,19 +280,32 @@ export const Dashboard = () => {
         </div>
 
         {/* Action Buttons */}
-        <div className="text-center">
-          <Button 
-            variant="blockchain" 
-            size="lg" 
-            onClick={() => setShowBlockchain(true)}
-            className="mr-4"
-          >
-            <BarChart3 className="h-5 w-5 mr-2" />
-            Explore Blockchain
-          </Button>
-          <Button variant="harvest" size="lg">
-            View Demo Flow
-          </Button>
+        <div className="text-center space-y-4">
+          <div className="flex flex-wrap gap-4 justify-center">
+            <Button 
+              variant="blockchain" 
+              size="lg" 
+              onClick={() => setShowBlockchain(true)}
+            >
+              <BarChart3 className="h-5 w-5 mr-2" />
+              Explore Blockchain
+            </Button>
+            <Button 
+              variant="success" 
+              size="lg"
+              onClick={() => setShowCommunity(true)}
+            >
+              <Users className="h-5 w-5 mr-2" />
+              Community Hub
+            </Button>
+            <Button variant="harvest" size="lg">
+              View Demo Flow
+            </Button>
+          </div>
+          <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
+            Experience the future of agriculture with AI-powered digital twins, blockchain transparency, 
+            and community-driven knowledge sharing
+          </p>
         </div>
       </div>
     </div>
