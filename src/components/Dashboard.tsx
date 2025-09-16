@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, BarChart3, Users, ShoppingCart, Tractor } from "lucide-react";
+import { DistributorForm } from "@/components/DistributorForm";
+import { Link } from "react-router-dom";
 import heroImage from "@/assets/agri-blockchain-hero.jpg";
 
 interface StatsData {
@@ -48,7 +50,21 @@ export const Dashboard = () => {
       case "consumer":
         return <ConsumerInterface />;
       case "distributor":
-        return <DistributorPlaceholder />;
+        return (
+          <div className="space-y-6">
+            <h2 className="text-2xl font-bold">Distributor</h2>
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex justify-end mb-4">
+                  <Link to="/distributor/network" className="text-sm underline text-primary">
+                    View Retailers & Farmers
+                  </Link>
+                </div>
+                <DistributorForm />
+              </CardContent>
+            </Card>
+          </div>
+        );
       case "retailer":
         return <RetailerPlaceholder />;
       default:
@@ -298,6 +314,11 @@ export const Dashboard = () => {
               <Users className="h-5 w-5 mr-2" />
               Community Hub
             </Button>
+            <Link to="/distributor">
+              <Button variant="outline" size="lg">
+                Distributor Page
+              </Button>
+            </Link>
             <Button variant="harvest" size="lg">
               View Demo Flow
             </Button>
